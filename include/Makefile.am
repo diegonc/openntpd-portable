@@ -1,6 +1,5 @@
 noinst_HEADERS =
 noinst_HEADERS += arpa/nameser.h
-noinst_HEADERS += machine/endian.h
 noinst_HEADERS += sys/queue.h
 noinst_HEADERS += sys/_null.h
 noinst_HEADERS += sys/socket.h
@@ -8,6 +7,7 @@ noinst_HEADERS += sys/types.h
 noinst_HEADERS += sys/time.h
 noinst_HEADERS += sys/mman.h
 noinst_HEADERS += sys/wait.h
+noinst_HEADERS += endian.h
 noinst_HEADERS += err.h
 noinst_HEADERS += ifaddrs.h
 noinst_HEADERS += imsg.h
