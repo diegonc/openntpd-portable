@@ -29,7 +29,7 @@ constraint_init(struct constraint *cstr)
 }
 
 int
-constraint_query(struct constraint *cstr)
+constraint_query(struct constraint *cstr, int synced)
 {
 	return (-1);
 }
