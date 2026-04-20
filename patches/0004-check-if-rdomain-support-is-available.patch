@@ -1,4 +1,4 @@
-From 795ed25696dbb44c8aaf6a7d304e70df8019b0ac Mon Sep 17 00:00:00 2001
+From b7ae7e1c0f089114fa9ac893e842c3e2b9bdeef4 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Tue, 30 Dec 2014 09:05:46 -0600
 Subject: [PATCH 04/20] check if rdomain support is available.
@@ -94,5 +94,5 @@ index 123b6939a2b..8c18eb7610d 100644
  		if (bind(la->fd, (struct sockaddr *)&la->sa,
  		    SA_LEN((struct sockaddr *)&la->sa)) == -1) {
 -- 
-2.37.3
+2.53.0
 

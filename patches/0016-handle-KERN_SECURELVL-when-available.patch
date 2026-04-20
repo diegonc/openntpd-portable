@@ -1,4 +1,4 @@
-From 61d9775f4378bbdcfca255de5a6f5a1f84fee349 Mon Sep 17 00:00:00 2001
+From 511e95f02b9fe8c0b2fa864fdf85e4fcdc13e48a Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Mon, 8 Jun 2020 06:53:53 -0500
 Subject: [PATCH 16/20] handle KERN_SECURELVL when available
@@ -8,7 +8,7 @@ Subject: [PATCH 16/20] handle KERN_SECURELVL when available
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/usr.sbin/ntpd/ntpd.c b/src/usr.sbin/ntpd/ntpd.c
-index da96eac94a6..73dea42f9da 100644
+index c8e5a53301c..83e6ce25f14 100644
 --- a/src/usr.sbin/ntpd/ntpd.c
 +++ b/src/usr.sbin/ntpd/ntpd.c
 @@ -20,7 +20,9 @@
@@ -21,7 +21,7 @@ index da96eac94a6..73dea42f9da 100644
  #include <sys/wait.h>
  #include <sys/un.h>
  #include <netinet/in.h>
-@@ -120,12 +122,14 @@ usage(void)
+@@ -119,12 +121,14 @@ usage(void)
  int
  auto_preconditions(const struct ntpd_conf *cnf)
  {
@@ -39,5 +39,5 @@ index da96eac94a6..73dea42f9da 100644
  	return !cnf->settime && (constraints || cnf->trusted_peers ||
  	    conf->trusted_sensors) && securelevel == 0;
 -- 
-2.37.3
+2.53.0
 

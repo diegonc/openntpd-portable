@@ -1,4 +1,4 @@
-From 2cbf4e7ae596243b435ae9b94eaa0fda3134293e Mon Sep 17 00:00:00 2001
+From 920157040f1f5325f906935a6a2cabfcc76e3714 Mon Sep 17 00:00:00 2001
 From: Brent Cook <bcook@openbsd.org>
 Date: Sat, 13 Aug 2016 14:22:02 -0500
 Subject: [PATCH 13/20] set IPV6_V6ONLY if we are binding to an IPv6 address
@@ -35,5 +35,5 @@ index 8c18eb7610d..9eab1a74bfe 100644
  		if (la->rtable != -1 &&
  		    setsockopt(la->fd, SOL_SOCKET, SO_RTABLE, &la->rtable,
 -- 
-2.37.3
+2.53.0
 

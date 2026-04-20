@@ -1,4 +1,4 @@
-From 85a6b49cd9ec737bc57e0c5b1baaf6e470b2d45d Mon Sep 17 00:00:00 2001
+From ff6ca9b7f48d7ecdc51b384d9654cd6f8e472842 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Fri, 27 Mar 2015 23:14:15 -0500
 Subject: [PATCH 09/20] Notify the user when constraint support is disabled.
@@ -27,10 +27,10 @@ index e243818c255..856c3147cc5 100644
  }
  
 diff --git a/src/usr.sbin/ntpd/constraint.c b/src/usr.sbin/ntpd/constraint.c
-index 7729c168c53..8f54597a066 100644
+index 7ecbc18920f..5abaf27b279 100644
 --- a/src/usr.sbin/ntpd/constraint.c
 +++ b/src/usr.sbin/ntpd/constraint.c
-@@ -353,10 +353,12 @@ priv_constraint_child(const char *pw_dir, uid_t pw_uid, gid_t pw_gid)
+@@ -374,10 +374,12 @@ priv_constraint_child(const char *pw_dir, uid_t pw_uid, gid_t pw_gid)
  	if (setpriority(PRIO_PROCESS, 0, 0) == -1)
  		log_warn("could not set priority");
  
@@ -44,7 +44,7 @@ index 7729c168c53..8f54597a066 100644
  	if (chroot(pw_dir) == -1)
  		fatal("chroot");
 diff --git a/src/usr.sbin/ntpd/ntpd.conf.5 b/src/usr.sbin/ntpd/ntpd.conf.5
-index ecc52fe6964..07b731db866 100644
+index 0eb75eb725c..9f5664cff21 100644
 --- a/src/usr.sbin/ntpd/ntpd.conf.5
 +++ b/src/usr.sbin/ntpd/ntpd.conf.5
 @@ -216,8 +216,15 @@ authenticated constraint,
@@ -66,5 +66,5 @@ index ecc52fe6964..07b731db866 100644
  .It Ic constraint from Ar url [ip...]
  Specify the URL, IP address or the hostname of an HTTPS server to
 -- 
-2.37.3
+2.53.0
 

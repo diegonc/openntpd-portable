@@ -41,7 +41,6 @@ sed '/DECLS/d' "${libc_inc}/sha2.h" > include/sha2_openbsd.h
 ${CP} "${libutil_src}/imsg.h" include/
 ${CP} "${libutil_src}/imsg.c" compat/
 ${CP} "${libutil_src}/imsg-buffer.c" compat/
-(cd compat; ${PATCH} < "${patches}/patch-imsg.c")
 
 for i in explicit_bzero.c strlcpy.c strlcat.c; do
 	${CP_LIBC} "${libc_src}/string/${i}" compat

@@ -1,4 +1,4 @@
-From 11f29c0b275b15a68577cb908e4e1ecfc6d93402 Mon Sep 17 00:00:00 2001
+From 0280727ccc2c36d829f1f89a4e7417c4a48167b2 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Mon, 16 Nov 2020 02:20:40 -0600
 Subject: [PATCH 19/20] initialize peercount
@@ -10,10 +10,10 @@ but it's not clear from the state machine.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/usr.sbin/ntpd/ntp.c b/src/usr.sbin/ntpd/ntp.c
-index 9db9f59b3ec..a3914e44990 100644
+index 90aad820ffd..8e10584572b 100644
 --- a/src/usr.sbin/ntpd/ntp.c
 +++ b/src/usr.sbin/ntpd/ntp.c
-@@ -545,7 +545,7 @@ ntp_dispatch_imsg_dns(void)
+@@ -550,7 +550,7 @@ ntp_dispatch_imsg_dns(void)
  	u_int16_t		 dlen;
  	u_char			*p;
  	struct ntp_addr		*h;
@@ -21,7 +21,7 @@ index 9db9f59b3ec..a3914e44990 100644
 +	size_t			 addrcount, peercount = 0;
  	int			 n;
  
- 	if (((n = imsg_read(ibuf_dns)) == -1 && errno != EAGAIN) || n == 0)
+ 	if (imsgbuf_read(ibuf_dns) != 1)
 -- 
-2.37.3
+2.53.0
 
