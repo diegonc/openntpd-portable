@@ -17,7 +17,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-AC_INIT([OpenNTPD], m4_esyscmd([tr -d '\n' < VERSION]))
+AC_INIT([OpenNTPD], m4_esyscmd(tr -d '\n' < VERSION))
 
 AC_CANONICAL_HOST
 AM_INIT_AUTOMAKE([subdir-objects foreign])
@@ -25,10 +25,8 @@ AC_CONFIG_MACRO_DIR([m4])
 
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-AC_PROG_CC
-AC_PROG_CC_STDC
+AC_PROG_CC([cc gcc])
 AM_PROG_CC_C_O
-AC_PROG_LIBTOOL
 LT_INIT
 AC_PROG_YACC
 
@@ -152,3 +150,5 @@ AC_CONFIG_FILES([
 ])
 
 AC_OUTPUT
+m4_unquote(
+  _m4_defn([_m4_wrap_text])_m4_popdef([_m4_wrap_text]))
