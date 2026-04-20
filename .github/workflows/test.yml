@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: homebrew
-      run: brew install automake
+      run: brew install automake libtool
     - name: autogen
       run: ./autogen.sh
     - name: configure
