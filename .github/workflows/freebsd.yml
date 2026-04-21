@@ -1,0 +1,43 @@
+# GitHub Actions workflow to run tests on a FreeBSD VM.
+name: "FreeBSD"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # At 00:00 daily.
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.event.number || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: "FreeBSD ${{ matrix.release }}"
+    runs-on: ubuntu-24.04
+    if: github.repository_owner == 'openntpd' || github.event_name != 'schedule'
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        release: ["14.4", "15.0"]
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: "Setup"
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y automake autoconf libtool
+          ./autogen.sh
+
+      - name: "Build on VM"
+        uses: vmactions/freebsd-vm@d1e65811565151536c0c894fff74f06351ed26e6 # v1.4.5
+        with:
+          release: "${{ matrix.release }}"
+          copyback: false
+          prepare: |
+            pkg install -y autoconf automake libtool
+          run: |
+            ./configure
+            make -j2 check || (cat tests/test-suite.log && exit 1)
