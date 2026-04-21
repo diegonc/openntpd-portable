@@ -142,10 +142,8 @@ AC_SUBST(PRIVSEP_USER)
 AC_ARG_WITH([cacert],
 	AS_HELP_STRING([--with-cacert=path],
 		       [CA certificate location for HTTPS constraint validation]),
-	CONSTRAINT_CA="$withval",
-	CONSTRAINT_CA="/etc/ssl/cert.pem"
+	[AC_DEFINE_UNQUOTED(CONSTRAINT_CA, "$withval", [CA certificate path])]
 )
-AC_DEFINE_UNQUOTED(CONSTRAINT_CA, "$CONSTRAINT_CA", [CA certificate path])
 
 AC_CONFIG_FILES([
 	Makefile
