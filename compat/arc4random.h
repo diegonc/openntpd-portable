@@ -3,10 +3,16 @@
 
 #include <sys/param.h>
 
-#if defined(__FreeBSD__)
+#if defined(_AIX)
+#include "arc4random_aix.h"
+
+#elif defined(__FreeBSD__)
 #include "arc4random_freebsd.h"
 
-#elif defined(__linux__)
+#elif defined(__hpux)
+#include "arc4random_hpux.h"
+
+#elif defined(__linux__) || defined(__midipix__)
 #include "arc4random_linux.h"
 
 #elif defined(__NetBSD__)
