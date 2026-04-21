@@ -35,7 +35,11 @@ typedef uint32_t    u_int32_t;
 typedef uint64_t    u_int64_t;
 
 #ifndef BYTE_ORDER
-#include <machine/endian.h>
+# if defined(HAVE_MACHINE_ENDIAN_H)
+#  include <machine/endian.h>
+# elif defined(HAVE_ENDIAN_H)
+#  include <endian.h>
+# endif
 #endif
 
 #endif
