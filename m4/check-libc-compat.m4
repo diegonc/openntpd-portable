@@ -16,7 +16,7 @@
 AC_DEFUN([CHECK_PROGNAME], [
 AC_CHECK_HEADERS([endian.h machine/endian.h])
 AC_CACHE_CHECK([if libc defines __progname], ac_cv_libc_defines___progname, [
-       AC_LINK_IFELSE([AC_LANG_PROGRAM([[]],
+       AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <stdio.h>]],
                 [[ extern char *__progname; printf("%s", __progname); ]])],
         [ ac_cv_libc_defines___progname="yes" ],
         [ ac_cv_libc_defines___progname="no"
