@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   test:
-    name: "${{ matrix.os }}"
+    name: "${{ matrix.os }}${{ matrix.libressl && ' +libtls' || '' }}"
     runs-on: "${{ matrix.os }}"
     if: ${{ github.repository_owner == 'openntpd' || github.event_name != 'schedule' }}
     permissions:
@@ -22,12 +22,22 @@ jobs:
       fail-fast: false
       matrix:
         os: ["macos-15", "macos-14"]
+        include:
+          - os: "macos-15"
+            libressl: true
     steps:
       - name: "Install required packages"
-        run: brew install automake libtool
+        run: brew install automake libtool ${{ matrix.libressl && 'libressl' || '' }}
 
       - name: "Checkout repository"
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: "Set libressl paths"
+        if: matrix.libressl
+        run: |
+          LIBRESSL_PREFIX=$(brew --prefix libressl)
+          echo "CPPFLAGS=-I${LIBRESSL_PREFIX}/include" >> $GITHUB_ENV
+          echo "LDFLAGS=-L${LIBRESSL_PREFIX}/lib" >> $GITHUB_ENV
 
       - name: "autogen"
         run: ./autogen.sh

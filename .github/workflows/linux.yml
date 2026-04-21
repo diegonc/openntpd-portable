@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   test:
-    name: "${{ matrix.os }} (${{ matrix.compiler }})"
+    name: "${{ matrix.os }} (${{ matrix.compiler }})${{ matrix.libtls && ' +libtls' || '' }}"
     runs-on: "${{ matrix.os }}"
     if: ${{ github.repository_owner == 'openntpd' || github.event_name != 'schedule' }}
     permissions:
@@ -23,9 +23,22 @@ jobs:
       matrix:
         os: ["ubuntu-22.04", "ubuntu-24.04"]
         compiler: ["gcc", "clang"]
+        include:
+          - os: "ubuntu-22.04"
+            compiler: "gcc"
+            libtls: true
+          - os: "ubuntu-24.04"
+            compiler: "gcc"
+            libtls: true
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: "Install libtls-dev"
+        if: matrix.libtls
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtls-dev
 
       - name: "autogen"
         run: ./autogen.sh
@@ -43,3 +56,41 @@ jobs:
 
       - name: "make distcheck"
         run: make distcheck
+
+  test-debian:
+    name: "Debian Trixie (${{ matrix.compiler }})${{ matrix.libtls && ' +libtls' || '' }}"
+    runs-on: ubuntu-24.04
+    container: debian:trixie
+    if: ${{ github.repository_owner == 'openntpd' || github.event_name != 'schedule' }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: ["gcc", "clang"]
+        include:
+          - compiler: "gcc"
+            libtls: true
+    steps:
+      - name: "Install build dependencies"
+        run: |
+          apt-get update
+          apt-get install -y git ${{ matrix.compiler }} make automake autoconf libtool \
+            ${{ matrix.libtls && 'libtls-dev' || '' }}
+
+      - name: "Checkout repository"
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: "autogen"
+        run: ./autogen.sh
+
+      - name: "configure"
+        run: ./configure
+        env:
+          CC: "${{ matrix.compiler }}"
+
+      - name: "make"
+        run: make
+
+      - name: "make check"
+        run: make check
