@@ -1,0 +1,76 @@
+# GitHub Actions workflow to test building with libressl's libtls.
+name: "libtls"
+
+on:
+  push: {}
+  pull_request: {}
+  schedule:
+    - cron: "0 0 * * 0" # At 00:00 weekly on Sunday.
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.event.number || github.ref }}"
+  cancel-in-progress: true
+
+env:
+  LIBRESSL_VERSION: "4.3.1"
+
+jobs:
+  test:
+    name: "${{ matrix.os }} (${{ matrix.compiler }})"
+    runs-on: "${{ matrix.os }}"
+    if: ${{ github.repository_owner == 'openntpd' || github.event_name != 'schedule' }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: "ubuntu-24.04"
+            compiler: "gcc"
+          - os: "ubuntu-24.04"
+            compiler: "clang"
+          - os: "macos-15"
+            compiler: "clang"
+
+    steps:
+      - name: "Install required packages (macOS)"
+        if: runner.os == 'macOS'
+        run: brew install automake libtool
+
+      - name: "Checkout repository"
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: "Cache libressl"
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        id: cache-libressl
+        with:
+          path: ${{ github.workspace }}/libressl-prefix
+          key: libressl-${{ env.LIBRESSL_VERSION }}-${{ matrix.os }}-${{ matrix.compiler }}
+
+      - name: "Build libressl"
+        if: steps.cache-libressl.outputs.cache-hit != 'true'
+        run: |
+          curl -O https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${{ env.LIBRESSL_VERSION }}.tar.gz
+          tar xf libressl-${{ env.LIBRESSL_VERSION }}.tar.gz
+          cd libressl-${{ env.LIBRESSL_VERSION }}
+          ./configure --prefix=${{ github.workspace }}/libressl-prefix \
+                      --enable-static --disable-shared
+          make -j2 install
+        env:
+          CC: "${{ matrix.compiler }}"
+
+      - name: "autogen"
+        run: ./autogen.sh
+
+      - name: "configure"
+        run: ./configure
+        env:
+          CC: "${{ matrix.compiler }}"
+          CPPFLAGS: "-I${{ github.workspace }}/libressl-prefix/include"
+          LDFLAGS: "-L${{ github.workspace }}/libressl-prefix/lib"
+
+      - name: "make"
+        run: make
+
+      - name: "make check"
+        run: make check
