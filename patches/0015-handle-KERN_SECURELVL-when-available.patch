@@ -1,0 +1,43 @@
+From 91a3e1398a45aa51347dc6107a04c3350ff9750b Mon Sep 17 00:00:00 2001
+From: Brent Cook <busterb@gmail.com>
+Date: Mon, 8 Jun 2020 06:53:53 -0500
+Subject: [PATCH 15/18] handle KERN_SECURELVL when available
+
+---
+ src/usr.sbin/ntpd/ntpd.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/usr.sbin/ntpd/ntpd.c b/src/usr.sbin/ntpd/ntpd.c
+index a95048dd88f..6ca0bfedb9b 100644
+--- a/src/usr.sbin/ntpd/ntpd.c
++++ b/src/usr.sbin/ntpd/ntpd.c
+@@ -20,7 +20,9 @@
+ #include <sys/types.h>
+ #include <sys/resource.h>
+ #include <sys/socket.h>
++#ifdef KERN_SECURELVL
+ #include <sys/sysctl.h>
++#endif
+ #include <sys/wait.h>
+ #include <sys/un.h>
+ #include <netinet/in.h>
+@@ -119,12 +121,14 @@ usage(void)
+ int
+ auto_preconditions(const struct ntpd_conf *cnf)
+ {
++	int constraints, securelevel = 0;
++
++#ifdef KERN_SECURELVL
+ 	int mib[2] = { CTL_KERN, KERN_SECURELVL };
+-	int constraints, securelevel;
+ 	size_t sz = sizeof(int);
+-
+ 	if (sysctl(mib, 2, &securelevel, &sz, NULL, 0) == -1)
+ 		err(1, "sysctl");
++#endif
+ 	constraints = !TAILQ_EMPTY(&cnf->constraints);
+ 	return !cnf->settime && (constraints || cnf->trusted_peers ||
+ 	    conf->trusted_sensors) && securelevel == 0;
+-- 
+2.53.0
+
