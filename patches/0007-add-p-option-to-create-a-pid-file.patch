@@ -1,7 +1,7 @@
-From e5d105f27076af219b71a6505ae2b60611c6553f Mon Sep 17 00:00:00 2001
+From 1d699111089406c5d5dc715aa9baf1019eb94f98 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Wed, 31 Dec 2014 08:26:41 -0600
-Subject: [PATCH 07/20] add -p option to create a pid file
+Subject: [PATCH 07/18] add -p option to create a pid file
 
 This is used in both the Gentoo and Debian ports.
 
@@ -35,7 +35,7 @@ index 6e7f515a4b0..b3f0e43f991 100644
  .Pp
  .Nm
 diff --git a/src/usr.sbin/ntpd/ntpd.c b/src/usr.sbin/ntpd/ntpd.c
-index 8106e5fc43f..86fb955b17e 100644
+index 46a38aba8e0..1d980945ea1 100644
 --- a/src/usr.sbin/ntpd/ntpd.c
 +++ b/src/usr.sbin/ntpd/ntpd.c
 @@ -89,6 +89,18 @@ sighdlr(int sig)
