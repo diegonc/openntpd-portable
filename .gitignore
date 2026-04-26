@@ -71,3 +71,5 @@ parse.c
 sensors.c
 server.c
 util.c
+
+src/*.in

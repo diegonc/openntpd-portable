@@ -19,10 +19,24 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CPPFLAGS += -DYYSTYPE_IS_DECLARED
 
 ACLOCAL_AMFLAGS = -Im4
-CLEANFILES = parse.c
+CLEANFILES = parse.c ntpctl.8 ntpd.8 ntpd.conf.5
+
+do_subst = sed \
+	-e 's,[@]sysconfdir[@],$(sysconfdir),g' \
+	-e 's,[@]localstatedir[@],$(localstatedir),g'
+
+ntpd.8: ntpd.8.in Makefile
+	$(do_subst) < $< > $@
+
+ntpd.conf.5: ntpd.conf.5.in Makefile
+	$(do_subst) < $< > $@
+
+ntpctl.8: ntpctl.8.in Makefile
+	$(do_subst) < $< > $@
 
 sbin_PROGRAMS = ntpd
-dist_man_MANS = ntpctl.8 ntpd.8 ntpd.conf.5
+nodist_man_MANS = ntpctl.8 ntpd.8 ntpd.conf.5
+EXTRA_DIST = ntpctl.8.in ntpd.8.in ntpd.conf.5.in
 
 ntpd_CFLAGS = $(CFLAGS)
 ntpd_CFLAGS += -DSYSCONFDIR=\"$(sysconfdir)\"
