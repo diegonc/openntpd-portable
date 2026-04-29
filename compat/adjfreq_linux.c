@@ -14,6 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/timex.h>
 
@@ -21,6 +22,36 @@
 
 #include <ntp.h>
 #include <ntpd.h>
+
+/*
+ * Implement adjtime() via adjtimex() to avoid EINVAL on musl libc when the
+ * delta exceeds its supported range, which causes ntpd to behave incorrectly.
+ */
+
+int
+adjtime(const struct timeval *delta, struct timeval *olddelta)
+{
+	struct timex txc = { 0 };
+
+	if (delta != NULL) {
+		txc.modes = ADJ_OFFSET_SINGLESHOT;
+		txc.offset = (long)delta->tv_sec * 1000000L + delta->tv_usec;
+	}
+
+	if (adjtimex(&txc) == -1)
+		return (-1);
+
+	if (olddelta != NULL) {
+		olddelta->tv_sec = txc.offset / 1000000L;
+		olddelta->tv_usec = txc.offset % 1000000L;
+		if (olddelta->tv_usec < 0) {
+			olddelta->tv_sec--;
+			olddelta->tv_usec += 1000000L;
+		}
+	}
+
+	return (0);
+}
 
 /*
  * adjfreq (old)freq = nanosec. per seconds shifted left 32 bits
