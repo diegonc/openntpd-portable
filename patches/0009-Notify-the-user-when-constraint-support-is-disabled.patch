@@ -1,7 +1,7 @@
-From 821b490b0f0e69145ac173edf275da1271637537 Mon Sep 17 00:00:00 2001
+From 16d00fc3c8a0c00b39e871c0ca90f88b5341ddb4 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Fri, 27 Mar 2015 23:14:15 -0500
-Subject: [PATCH 09/18] Notify the user when constraint support is disabled.
+Subject: [PATCH 09/19] Notify the user when constraint support is disabled.
 
 Update the manpage and warn if constraints are
 configured but ntpd is built without libtls present.

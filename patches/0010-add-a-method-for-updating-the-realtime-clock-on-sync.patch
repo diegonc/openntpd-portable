@@ -1,7 +1,7 @@
-From 5a28b1e214f7f1f0f7fd8ce1297c56377143e8bf Mon Sep 17 00:00:00 2001
+From e5df36e933fde1ff88d08aa339015fe208965bf2 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Mon, 4 May 2015 04:27:29 -0500
-Subject: [PATCH 10/18] add a method for updating the realtime clock on sync
+Subject: [PATCH 10/19] add a method for updating the realtime clock on sync
 
 from Christian Weisgerber
 ---

@@ -1,7 +1,7 @@
-From fbb10ad657ee6a2865ef993f89b8b3ec50c4bcfe Mon Sep 17 00:00:00 2001
+From 8453dddde6f2b55928833dfda994315dc43e2a14 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Mon, 20 Apr 2026 21:40:43 -0500
-Subject: [PATCH 18/18] allow overiding the constraint path
+Subject: [PATCH 18/19] allow overiding the constraint path
 
 ---
  src/usr.sbin/ntpd/constraint.c | 7 ++++++-

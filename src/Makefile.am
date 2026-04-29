@@ -23,16 +23,18 @@ CLEANFILES = parse.c ntpctl.8 ntpd.8 ntpd.conf.5
 
 do_subst = sed \
 	-e 's,[@]sysconfdir[@],$(sysconfdir),g' \
-	-e 's,[@]localstatedir[@],$(localstatedir),g'
+	-e 's,[@]localstatedir[@],$(localstatedir),g' \
+	-e 's,[@]runstatedir[@],$(runstatedir),g' \
+	-e 's,[@]sbindir[@],$(sbindir),g'
 
-ntpd.8: ntpd.8.in Makefile
-	$(do_subst) < $< > $@
+ntpd.8: $(srcdir)/ntpd.8.in Makefile
+	$(do_subst) < $(srcdir)/ntpd.8.in > ntpd.8
 
-ntpd.conf.5: ntpd.conf.5.in Makefile
-	$(do_subst) < $< > $@
+ntpd.conf.5: $(srcdir)/ntpd.conf.5.in Makefile
+	$(do_subst) < $(srcdir)/ntpd.conf.5.in > ntpd.conf.5
 
-ntpctl.8: ntpctl.8.in Makefile
-	$(do_subst) < $< > $@
+ntpctl.8: $(srcdir)/ntpctl.8.in Makefile
+	$(do_subst) < $(srcdir)/ntpctl.8.in > ntpctl.8
 
 sbin_PROGRAMS = ntpd
 nodist_man_MANS = ntpctl.8 ntpd.8 ntpd.conf.5
@@ -41,6 +43,7 @@ EXTRA_DIST = ntpctl.8.in ntpd.8.in ntpd.conf.5.in
 ntpd_CFLAGS = $(CFLAGS)
 ntpd_CFLAGS += -DSYSCONFDIR=\"$(sysconfdir)\"
 ntpd_CFLAGS += -DLOCALSTATEDIR=\"$(localstatedir)\"
+ntpd_CFLAGS += -DRUNSTATEDIR=\"$(runstatedir)\"
 
 ntpd_LDADD = $(PLATFORM_LDADD) $(PROG_LDADD) -lm
 ntpd_LDADD += $(top_builddir)/compat/libcompat.la
@@ -78,11 +81,11 @@ install-exec-hook:
 	@if [ ! -d "$(DESTDIR)$(sysconfdir)" ]; then \
 		$(INSTALL) -m 755 -d "$(DESTDIR)$(sysconfdir)"; \
 	fi
-	@if [ ! -d "$(DESTDIR)$(localstatedir)/run" ]; then \
-		$(INSTALL) -m 755 -d "$(DESTDIR)$(localstatedir)/run"; \
+	@if [ ! -d "$(DESTDIR)$(localstatedir)" ]; then \
+		$(INSTALL) -m 755 -d "$(DESTDIR)$(localstatedir)"; \
 	fi
-	@if [ ! -d "$(DESTDIR)$(localstatedir)/db" ]; then \
-		$(INSTALL) -m 755 -d "$(DESTDIR)$(localstatedir)/db"; \
+	@if [ ! -d "$(DESTDIR)$(runstatedir)" ]; then \
+		$(INSTALL) -m 755 -d "$(DESTDIR)$(runstatedir)"; \
 	fi
 	@if egrep "^$(PRIVSEP_USER):" /etc/group >/dev/null; then \
 		: ; \

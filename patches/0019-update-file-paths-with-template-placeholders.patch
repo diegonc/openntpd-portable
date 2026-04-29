@@ -1,4 +1,4 @@
-From 706e0d83b35385644766221bdeb37ee6e75ab192 Mon Sep 17 00:00:00 2001
+From 04c08b1f669266e338e32a42907ebef15dc0e3dd Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Sun, 26 Apr 2026 04:06:18 -0500
 Subject: [PATCH 19/19] update file paths with template placeholders
@@ -10,7 +10,7 @@ Subject: [PATCH 19/19] update file paths with template placeholders
  3 files changed, 10 insertions(+), 12 deletions(-)
 
 diff --git a/src/usr.sbin/ntpd/ntpctl.8 b/src/usr.sbin/ntpd/ntpctl.8
-index ff1e4872d..d3f5fb08e 100644
+index ff1e4872dd9..d3e3dee7be9 100644
 --- a/src/usr.sbin/ntpd/ntpctl.8
 +++ b/src/usr.sbin/ntpd/ntpctl.8
 @@ -63,8 +63,8 @@ system call, is displayed.
@@ -19,13 +19,13 @@ index ff1e4872d..d3f5fb08e 100644
  .Sh FILES
 -.Bl -tag -width "/var/run/ntpd.sockXXX" -compact
 -.It Pa /var/run/ntpd.sock
-+.Bl -tag -width "@localstatedir@/run/ntpd.sockXX" -compact
-+.It Pa @localstatedir@/run/ntpd.sock
++.Bl -tag -width "@runstatedir@/ntpd.sockXX" -compact
++.It Pa @runstatedir@/ntpd.sock
  Socket file for communication with
  .Xr ntpd 8 .
  .El
 diff --git a/src/usr.sbin/ntpd/ntpd.8 b/src/usr.sbin/ntpd/ntpd.8
-index b3f0e43f9..728b4d1b2 100644
+index b3f0e43f991..385a5c0087f 100644
 --- a/src/usr.sbin/ntpd/ntpd.8
 +++ b/src/usr.sbin/ntpd/ntpd.8
 @@ -56,7 +56,7 @@ Use
@@ -42,24 +42,24 @@ index b3f0e43f9..728b4d1b2 100644
  .Xr ntpd.conf 5 ,
  and its initial clock drift from
 -.Pa /var/db/ntpd.drift .
-+.Pa @localstatedir@/db/ntpd.drift .
++.Pa @localstatedir@/ntpd.drift .
  Clock drift is periodically written to the drift file thereafter.
  .Sh FILES
 -.Bl -tag -width "/var/db/ntpd.driftXXX" -compact
 -.It Pa /etc/ntpd.conf
-+.Bl -tag -width "@localstatedir@/db/ntpd.driftXX" -compact
++.Bl -tag -width "@localstatedir@/ntpd.driftXX" -compact
 +.It Pa @sysconfdir@/ntpd.conf
  Default configuration file.
 -.It Pa /var/db/ntpd.drift
-+.It Pa @localstatedir@/db/ntpd.drift
++.It Pa @localstatedir@/ntpd.drift
  Drift file.
 -.It Pa /var/run/ntpd.sock
-+.It Pa @localstatedir@/run/ntpd.sock
++.It Pa @runstatedir@/ntpd.sock
  Socket file for communication with
  .Xr ntpctl 8 .
  .El
 diff --git a/src/usr.sbin/ntpd/ntpd.conf.5 b/src/usr.sbin/ntpd/ntpd.conf.5
-index 9f5664cff..63ea15a68 100644
+index 9f5664cff21..63ea15a6815 100644
 --- a/src/usr.sbin/ntpd/ntpd.conf.5
 +++ b/src/usr.sbin/ntpd/ntpd.conf.5
 @@ -258,13 +258,11 @@ constraints from "https://www.google.com/"
@@ -79,5 +79,5 @@ index 9f5664cff..63ea15a68 100644
  .Sh SEE ALSO
  .Xr ntpctl 8 ,
 -- 
-2.50.1 (Apple Git-155)
+2.53.0
 

@@ -130,6 +130,11 @@ AC_CHECK_MEMBERS([struct sockaddr_in.sin_len], , ,
 	  #include <sys/socket.h> ]
 )
 
+# runstatedir was added as a standard directory in autoconf 2.70; provide a
+# fallback for older versions so @runstatedir@ is always substituted.
+AS_IF([test "x$runstatedir" = x], [runstatedir='${localstatedir}/run'])
+AC_SUBST([runstatedir])
+
 AC_ARG_WITH([privsep-user],
 	AS_HELP_STRING([--with-privsep-user=user],
 		       [Privilege separation user for ntpd to use]),

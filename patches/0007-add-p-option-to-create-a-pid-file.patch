@@ -1,7 +1,7 @@
-From 1d699111089406c5d5dc715aa9baf1019eb94f98 Mon Sep 17 00:00:00 2001
+From 99bd1406c952b88b238d3fa1f7ee8a5f32157c2b Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Wed, 31 Dec 2014 08:26:41 -0600
-Subject: [PATCH 07/18] add -p option to create a pid file
+Subject: [PATCH 07/19] add -p option to create a pid file
 
 This is used in both the Gentoo and Debian ports.
 
@@ -134,10 +134,10 @@ index 46a38aba8e0..1d980945ea1 100644
  			timeout = INFTIM;
  			break;
 diff --git a/src/usr.sbin/ntpd/ntpd.h b/src/usr.sbin/ntpd/ntpd.h
-index 77bbcd94f46..4d8abc577d5 100644
+index d87927b9c28..69dd2336a26 100644
 --- a/src/usr.sbin/ntpd/ntpd.h
 +++ b/src/usr.sbin/ntpd/ntpd.h
-@@ -262,6 +262,7 @@ struct ntpd_conf {
+@@ -259,6 +259,7 @@ struct ntpd_conf {
  	u_int8_t					*ca;
  	size_t						ca_len;
  	int						tmpfail;

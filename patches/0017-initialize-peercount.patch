@@ -1,7 +1,7 @@
-From a9c57826e9ce9f54b9858ed0cc606812106ab992 Mon Sep 17 00:00:00 2001
+From e2abe2872c29a71bbe591eb937e086eb2147fe91 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Mon, 16 Nov 2020 02:20:40 -0600
-Subject: [PATCH 17/18] initialize peercount
+Subject: [PATCH 17/19] initialize peercount
 
 gcc on several platforms complains about this. It might not be a problem
 but it's not clear from the state machine.

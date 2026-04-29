@@ -1,7 +1,7 @@
-From cd100a92d7e5f166ad04784343b85b8a593e3569 Mon Sep 17 00:00:00 2001
+From 75e5b27c8340768bc29ed61668d17376daf5c45b Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Mon, 16 Nov 2020 02:20:10 -0600
-Subject: [PATCH 16/18] cast mode to unsigned int for Solaris
+Subject: [PATCH 16/19] cast mode to unsigned int for Solaris
 
 ---
  src/usr.sbin/ntpd/ntp.c | 2 +-
