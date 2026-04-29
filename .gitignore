@@ -73,3 +73,4 @@ server.c
 util.c
 
 src/*.in
+!src/openntpd.service.in

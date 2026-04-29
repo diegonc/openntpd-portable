@@ -36,9 +36,18 @@ ntpd.conf.5: $(srcdir)/ntpd.conf.5.in Makefile
 ntpctl.8: $(srcdir)/ntpctl.8.in Makefile
 	$(do_subst) < $(srcdir)/ntpctl.8.in > ntpctl.8
 
+if HAVE_SYSTEMD
+systemdunitdir = @systemdunitdir@
+nodist_systemdunit_DATA = openntpd.service
+CLEANFILES += openntpd.service
+
+openntpd.service: openntpd.service.in Makefile
+	$(do_subst) < $< > $@
+endif
+
 sbin_PROGRAMS = ntpd
 nodist_man_MANS = ntpctl.8 ntpd.8 ntpd.conf.5
-EXTRA_DIST = ntpctl.8.in ntpd.8.in ntpd.conf.5.in
+EXTRA_DIST = ntpctl.8.in ntpd.8.in ntpd.conf.5.in openntpd.service.in
 
 ntpd_CFLAGS = $(CFLAGS)
 ntpd_CFLAGS += -DSYSCONFDIR=\"$(sysconfdir)\"
