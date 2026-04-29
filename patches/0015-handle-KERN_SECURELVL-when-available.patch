@@ -1,14 +1,14 @@
-From 3d1c51d587c7062c138d69c1c9ee1c0c12657117 Mon Sep 17 00:00:00 2001
+From 744376e0a488f7a0d594ea6b3d4b31ac684d4b7e Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Mon, 8 Jun 2020 06:53:53 -0500
-Subject: [PATCH 15/19] handle KERN_SECURELVL when available
+Subject: [PATCH 15/24] handle KERN_SECURELVL when available
 
 ---
  src/usr.sbin/ntpd/ntpd.c | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/usr.sbin/ntpd/ntpd.c b/src/usr.sbin/ntpd/ntpd.c
-index a95048dd88f..6ca0bfedb9b 100644
+index eca3fa21e9b..5ec30d4fc38 100644
 --- a/src/usr.sbin/ntpd/ntpd.c
 +++ b/src/usr.sbin/ntpd/ntpd.c
 @@ -21,7 +21,9 @@
