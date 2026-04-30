@@ -1,10 +1,10 @@
-From c24d92d96053a8dff69d72ae643fd6d8c4be5962 Mon Sep 17 00:00:00 2001
+From 09f47c412d92cdef0f805824d62466ed7715ec00 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Tue, 28 Apr 2026 21:44:15 -0500
 Subject: [PATCH 21/24] avoid time_t overflow when calculating constraint
  median
 
-Based on work by Chris Webb (arachsys)
+Based on work by Chris Webb <chris@arachsys.com>
 https://github.com/arachsys/openntpd/commit/931555d68d1418e0b3fbd9464ca5831693cd0bd2
 ---
  src/usr.sbin/ntpd/constraint.c | 3 ++-

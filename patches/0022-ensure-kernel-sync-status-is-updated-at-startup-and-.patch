@@ -1,10 +1,10 @@
-From 1cf4f8f9ec67e6c77c93cfef43ce63ec16f5bcc4 Mon Sep 17 00:00:00 2001
+From bc6048cf52ac579812a540ecf594563ced09ad60 Mon Sep 17 00:00:00 2001
 From: Brent Cook <busterb@gmail.com>
 Date: Tue, 28 Apr 2026 21:44:56 -0500
 Subject: [PATCH 22/24] ensure kernel sync status is updated at startup and
  when clock goes unsynced
 
-Based on work by Chris Webb (arachsys)
+Based on work by Chris Webb <chris@arachsys.com>
 https://github.com/arachsys/openntpd/commit/d8f531380b15f8e8082684483446926dcef339d5
 ---
  src/usr.sbin/ntpd/ntp.c  | 3 +++
