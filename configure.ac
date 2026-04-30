@@ -59,6 +59,7 @@ AC_SEARCH_LIBS([clock_gettime],[rt posix4])
 AC_CHECK_FUNCS([adjfreq ntp_adjtime adjtimex])
 AC_CHECK_FUNCS([clock_gettime clock_getres])
 AM_CONDITIONAL([HAVE_ADJFREQ], [test "x$ac_cv_func_adjfreq" = xyes])
+AM_CONDITIONAL([HAVE_ADJTIMEX], [test "x$ac_cv_func_adjtimex" = xyes])
 AM_CONDITIONAL([HAVE_CLOCK_GETRES], [test "x$ac_cv_func_clock_getres" = xyes])
 AM_CONDITIONAL([HAVE_CLOCK_GETTIME], [test "x$ac_cv_func_clock_gettime" = xyes])
 
