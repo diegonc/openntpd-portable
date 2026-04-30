@@ -66,7 +66,7 @@ AM_CONDITIONAL([HAVE_CLOCK_GETTIME], [test "x$ac_cv_func_clock_gettime" = xyes])
 # check for libtls; explicitly add -ltls to LIBS so AC_CHECK_FUNCS and the
 # tls_write arity check below both link against it
 saved_LIBS="$LIBS"
-LIBS="$LIBS -ltls -lssl -lcrypto"
+LIBS="$LIBS -ltls"
 AC_CHECK_FUNCS([tls_config_set_ca_mem])
 if test "x$ac_cv_func_tls_config_set_ca_mem" = xno; then
 	LIBS="$saved_LIBS"
