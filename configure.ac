@@ -63,10 +63,14 @@ AM_CONDITIONAL([HAVE_ADJTIMEX], [test "x$ac_cv_func_adjtimex" = xyes])
 AM_CONDITIONAL([HAVE_CLOCK_GETRES], [test "x$ac_cv_func_clock_getres" = xyes])
 AM_CONDITIONAL([HAVE_CLOCK_GETTIME], [test "x$ac_cv_func_clock_gettime" = xyes])
 
-# check for libtls
-AC_SEARCH_LIBS([tls_config_set_ca_mem],[tls],
-	       [LIBS="$LIBS -ltls -lssl -lcrypto"],,[-lssl -lcrypto])
+# check for libtls; explicitly add -ltls to LIBS so AC_CHECK_FUNCS and the
+# tls_write arity check below both link against it
+saved_LIBS="$LIBS"
+LIBS="$LIBS -ltls -lssl -lcrypto"
 AC_CHECK_FUNCS([tls_config_set_ca_mem])
+if test "x$ac_cv_func_tls_config_set_ca_mem" = xno; then
+	LIBS="$saved_LIBS"
+fi
 
 # check if libtls uses 3-argument tls_write
 AC_CACHE_CHECK([if tls_write takes 3 arguments], ac_cv_have_tls_write_3_arg, [
