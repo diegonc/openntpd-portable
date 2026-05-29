@@ -152,3 +152,21 @@ if test "x$ac_cv_have___va_copy" = "xyes" ; then
 	AC_DEFINE([HAVE___VA_COPY], [1], [Define if __va_copy exists])
 fi
 ])
+
+AC_DEFUN([CHECK_GLIBC_VERSION], [
+AC_CACHE_CHECK([for glibc version >= $1.$2], [ac_cv_glibc_min_M$1m$2_ok], [
+	AC_PREPROC_IFELSE(
+		[AC_LANG_SOURCE([
+#include <features.h>
+#if !defined(__GLIBC_PREREQ)
+# error "Not using glibc or _GLIBC_PREREQ is missing"
+#elif !__GLIBC_PREREQ($1, $2)
+# error "glibc version is too old"
+#endif
+		])],
+		[ac_cv_glibc_min_M$1m$2_ok=yes],
+		[ac_cv_glibc_min_M$1m$2_ok=no])
+])
+
+AS_IF([test "x$ac_cv_glibc_min_M$1m$2_ok" = "xyes"], [$3], [$4])
+])

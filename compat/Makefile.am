@@ -51,6 +51,9 @@ endif
 if HOST_SOLARIS
 libcompat_la_SOURCES += adjfreq_solaris.c
 endif
+if HOST_GNU
+libcompat_la_SOURCES += adjfreq_gnu.c
+endif
 endif
 
 if HOST_OPENBSD

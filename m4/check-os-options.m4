@@ -137,6 +137,21 @@ char buf[1]; getentropy(buf, 1);
 		CPPFLAGS="$CPPFLAGS -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -DBSD_COMP"
 		AC_SUBST([PLATFORM_LDADD], ['-lresolv -lsocket -lnsl'])
 		;;
+	*gnu*)
+		HOST_OS=gnu
+		HOST_ABI=elf
+		CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
+		CHECK_GLIBC_VERSION([2], [44], [],
+			[AC_MSG_ERROR([glibc version is too old])])
+
+		AC_MSG_CHECKING([for task_max_priority in mach_host.defs])
+		AC_EGREP_HEADER(
+			[task_max_priority],
+			[mach/mach_host.defs],
+			[AC_MSG_RESULT([yes])],
+			[AC_MSG_RESULT([no])
+			 AC_MSG_WARN([gnumach is too old, setpriority will not work])])
+		;;
 	*) ;;
 esac
 
@@ -149,4 +164,5 @@ AM_CONDITIONAL([HOST_LINUX],   [test x$HOST_OS = xlinux])
 AM_CONDITIONAL([HOST_NETBSD],  [test x$HOST_OS = xnetbsd])
 AM_CONDITIONAL([HOST_OPENBSD], [test x$HOST_OS = xopenbsd])
 AM_CONDITIONAL([HOST_SOLARIS], [test x$HOST_OS = xsolaris])
+AM_CONDITIONAL([HOST_GNU],     [test x$HOST_OS = xgnu])
 ])
